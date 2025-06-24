@@ -651,10 +651,6 @@ void O2::onRefreshFinished() {
 void O2::onRefreshError(QNetworkReply::NetworkError error) {
     QNetworkReply *refreshReply = qobject_cast<QNetworkReply *>(sender());
     int code = refreshReply ? refreshReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() : 0;
-    if (code >= 400 && code <= 499)
-    {
-        unlink();
-    }
     log( QStringLiteral("O2::onRefreshError: %1 (code %2)").arg( error ).arg( code ), O0BaseAuth::LogLevel::Warning );
     timedReplies_.remove(refreshReply);
     Q_EMIT refreshFinished(error);
